@@ -9,6 +9,13 @@ public class PessoaBean {
 	
 	private String sobrenome;
 	
+	private String nomeCompleto;
+	
+	public String mostrarNome() {
+		nomeCompleto = nome + " " + sobrenome;
+		return "";
+	}
+	
 	public String getNome() {
 		return nome;
 	}
@@ -23,6 +30,14 @@ public class PessoaBean {
 	
 	public void setSobrenome(String sobrenome) {
 		this.sobrenome = sobrenome;
+	}
+
+	public String getNomeCompleto() {
+		return nomeCompleto;
+	}
+
+	public void setNomeCompleto(String nomeCompleto) {
+		this.nomeCompleto = nomeCompleto;
 	}
 	
 }

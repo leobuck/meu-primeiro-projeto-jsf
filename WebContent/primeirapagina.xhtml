@@ -8,8 +8,19 @@
 </h:head>
 
 <h:body>
-	<h:form>
-		
+	<h:form id="formPessoa">
+		<h:outputLabel value="Olá, JSF!" />
+		<br/>
+		Nome:
+		<h:inputText id="nome" value="#{pessoaBean.nome}" />
+		<br />
+		Sobrenome:
+		<h:inputText id="sobrenome" value="#{pessoaBean.sobrenome}" />
+		<br />
+		Nome Completo:
+		<h:outputText value="#{pessoaBean.nomeCompleto}"></h:outputText>
+		<br />
+		<h:commandButton value="Mostrar Nome" action="#{pessoaBean.mostrarNome}"/>
 	</h:form>
 </h:body>
 
