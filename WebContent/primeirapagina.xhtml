@@ -22,7 +22,7 @@
 		<br />
 		<h:commandButton value="Mostrar Nome" action="#{pessoaBean.mostrarNome}"/>
 		<br />
-		<h:commandButton value="Adicionar Nome" action="#{pessoaBean.addNome}"/>		
+		<h:commandButton value="Adicionar Nome" action="#{pessoaBean.addNome}" binding="#{pessoaBean.commandButton}"/>		
 	</h:form>
 	
 	<h:dataTable value="#{pessoaBean.nomes}" var="nome">
