@@ -29,8 +29,10 @@ public class PessoaBean {
 	public String addNome() {
 		nomes.add(nome);
 		
-		if (nomes.size() > 0) {
+		if (nomes.size() > 3) {
 			commandButton.setDisabled(true);
+			
+			return "paginanavegada";			
 		}
 		
 		return "";
