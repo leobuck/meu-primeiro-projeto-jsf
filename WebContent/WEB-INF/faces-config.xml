@@ -10,5 +10,13 @@
 		<managed-bean-class>br.com.cursojsf.PessoaBean</managed-bean-class>
 		<managed-bean-scope>view</managed-bean-scope>
 	</managed-bean>-->
+	
+	<navigation-rule>
+		<from-view-id>/index.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>explicita</from-outcome>
+			<to-view-id>/navegacaoexplicita.jsf</to-view-id>
+		</navigation-case>
+	</navigation-rule>
 
 </faces-config>
