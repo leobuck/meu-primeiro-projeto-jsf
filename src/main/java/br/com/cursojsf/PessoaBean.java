@@ -32,7 +32,7 @@ public class PessoaBean {
 		if (nomes.size() > 3) {
 			commandButton.setDisabled(true);
 			
-			return "paginanavegada";			
+			return "paginanavegada?faces-redirect=true";			
 		}
 		
 		return "";
