@@ -29,6 +29,11 @@
 		<br />
 		Texto:
 		<h:inputTextarea id="texto" value="#{pessoaBean.texto}" rows="5" cols="50" />
+		<br />
+		<h:outputText value="Saída de Texto com outputText"/>
+		<br />
+		<h:outputLabel value="Nome:" for="numero"/>
+		<h:inputText id="numero"/>
 	</h:form>
 	
 	<h:dataTable value="#{pessoaBean.nomes}" var="nome">
