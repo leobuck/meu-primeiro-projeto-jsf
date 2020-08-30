@@ -12,23 +12,23 @@
 		<h:outputLabel value="Olá, JSF!" />
 		<br/>
 		Nome:
-		<h:inputText id="nome" value="#{pessoaBean.nome}" />
+		<h:inputText id="nome" value="#{pessoaBeanOld.nome}" />
 		<br />
 		Sobrenome:
-		<h:inputText id="sobrenome" value="#{pessoaBean.sobrenome}" />
+		<h:inputText id="sobrenome" value="#{pessoaBeanOld.sobrenome}" />
 		<br />
 		Nome Completo:
-		<h:outputText value="#{pessoaBean.nomeCompleto}"></h:outputText>
+		<h:outputText value="#{pessoaBeanOld.nomeCompleto}"></h:outputText>
 		<br />
-		<h:commandButton value="Mostrar Nome" action="#{pessoaBean.mostrarNome}" />
+		<h:commandButton value="Mostrar Nome" action="#{pessoaBeanOld.mostrarNome}" />
 		<br />
-		<h:commandButton value="Adicionar Nome" action="#{pessoaBean.addNome}" binding="#{pessoaBean.commandButton}" />
+		<h:commandButton value="Adicionar Nome" action="#{pessoaBeanOld.addNome}" binding="#{pessoaBeanOld.commandButton}" />
 		<br />
 		Senha:
-		<h:inputSecret id="senha" value="#{pessoaBean.senha}" />
+		<h:inputSecret id="senha" value="#{pessoaBeanOld.senha}" />
 		<br />
 		Texto:
-		<h:inputTextarea id="texto" value="#{pessoaBean.texto}" rows="5" cols="50" />
+		<h:inputTextarea id="texto" value="#{pessoaBeanOld.texto}" rows="5" cols="50" />
 		<br />
 		<h:outputText value="Saída de Texto com outputText"/>
 		<br />
@@ -36,7 +36,7 @@
 		<h:inputText id="numero"/>
 	</h:form>
 	
-	<h:dataTable value="#{pessoaBean.nomes}" var="nome">
+	<h:dataTable value="#{pessoaBeanOld.nomes}" var="nome">
 		<h:column>
 			<h:outputText value="#{nome}" />
 		</h:column>

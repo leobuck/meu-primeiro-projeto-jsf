@@ -1,4 +1,4 @@
-package br.com.cursojsf;
+package br.com.cursojsf.bean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,8 +8,8 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.component.html.HtmlCommandButton;
 
 @ViewScoped
-@ManagedBean(name = "pessoaBean")
-public class PessoaBean {
+@ManagedBean(name = "pessoaBeanOld")
+public class PessoaBeanOld {
 
 	private String nome;
 
