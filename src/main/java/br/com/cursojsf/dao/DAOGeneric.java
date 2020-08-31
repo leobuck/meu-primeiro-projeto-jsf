@@ -37,4 +37,37 @@ public class DAOGeneric<E> {
 		return entidadeRetorno;
 	}
 	
+	public void delete(E entidade) {
+		EntityManager entityManager = JPAUtil.getEntityManager();
+		
+		EntityTransaction transaction = entityManager.getTransaction();
+		
+		transaction.begin();
+		
+		entityManager.remove(entidade);
+		
+		transaction.commit();
+		
+		entityManager.close();
+	}
+	
+	public void deletePorId(E entidade) {
+		EntityManager entityManager = JPAUtil.getEntityManager();
+		
+		EntityTransaction transaction = entityManager.getTransaction();
+		
+		transaction.begin();
+		
+		Object id = JPAUtil.getPrimaryKey(entidade);
+		
+		entityManager
+			.createQuery("DELETE FROM " + entidade.getClass().getSimpleName() + " WHERE id = :id")
+			.setParameter("id", id)
+			.executeUpdate();
+		
+		transaction.commit();
+		
+		entityManager.close();
+	}
+	
 }
