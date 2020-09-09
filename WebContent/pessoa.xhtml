@@ -10,43 +10,91 @@
 
 <h:body>
 	<h:form id="formPessoa">
-		<h:outputLabel value="Id" for="id" />
-		<h:inputText id="id" value="#{pessoaBean.pessoa.id}" readonly="true" />
-		<br />
-		<h:outputLabel value="Nome" for="nome" />
-		<h:inputText id="nome" value="#{pessoaBean.pessoa.nome}" />
-		<br />
-		<h:outputLabel value="Sobrenome" for="sobrenome" />
-		<h:inputText id="sobrenome" value="#{pessoaBean.pessoa.sobrenome}" />
-		<br />
-		<h:outputLabel value="Idade" for="idade" />
-		<h:inputText id="idade" value="#{pessoaBean.pessoa.idade}" />
-		<!-- <br />
-		<h:outputLabel value="Data de Nascimento" for="dataNascimento" />
-		<h:inputText id="dataNascimento" value="#{pessoaBean.pessoa.dataNascimento}" /> -->
-		<br />
-		<h:commandButton value="Novo" action="#{pessoaBean.novo}" />
-		<h:commandButton value="Salvar" action="#{pessoaBean.salvar}" />
-		<h:commandButton value="Remover" action="#{pessoaBean.remover}" />
+		<h:graphicImage height="100" width="100" library="img" name="redondo2.png" />
+		<h:panelGrid columns="2">
+			<f:facet name="header">
+				<h:outputText value="Cadastro em  JSF" />
+			</f:facet>
+			<h:outputLabel value="Id" for="id" />
+			<h:inputText id="id" value="#{pessoaBean.pessoa.id}" readonly="true" />
+			
+			<h:outputLabel value="Nome" for="nome" />
+			<h:inputText id="nome" value="#{pessoaBean.pessoa.nome}" />
+			
+			<h:outputLabel value="Sobrenome" for="sobrenome" />
+			<h:inputText id="sobrenome" value="#{pessoaBean.pessoa.sobrenome}" />
+			
+			<h:outputLabel value="Idade" for="idade" />
+			<h:inputText id="idade" value="#{pessoaBean.pessoa.idade}" />
+			
+			<h:outputLabel value="Sexo" for="sexo" />
+			<h:selectOneMenu id="sexo" value="#{pessoaBean.pessoa.sexo}">
+				<f:selectItem itemValue="NA" itemLabel="Selecione" noSelectionOption="true"></f:selectItem>
+				<f:selectItem itemValue="F" itemLabel="Feminino" />
+				<f:selectItem itemValue="M" itemLabel="Masculino" />
+			</h:selectOneMenu>
+			
+			<h:outputLabel value="Frameworks" for="frameworks" />
+			<h:selectManyMenu id="frameworks" value="#{pessoaBean.pessoa.frameworks}" style="height: 150px;">
+				<f:selectItem itemValue="Hibernate" />
+				<f:selectItem itemValue="Spring MVC" />
+				<f:selectItem itemValue="JPA" />
+				<f:selectItem itemValue="PrimeFaces" />
+				<f:selectItem itemValue="JSF" />
+			</h:selectManyMenu>
+			
+			<h:outputLabel value="Ativo" for="ativo" />
+			<h:selectBooleanCheckbox value="#{pessoaBean.pessoa.ativo}"/>
+			
+			<h:outputLabel />
+			<h:panelGroup>
+				<h:commandButton value="Novo" action="#{pessoaBean.novo}" image="/resources/img/novo.png" title="Novo" />
+				<h:commandButton value="Salvar" action="#{pessoaBean.salvar}" image="/resources/img/salvar.png" title="Salvar" />
+				<h:commandButton value="Remover" action="#{pessoaBean.remover}" image="/resources/img/apagar.png" title="Remover" />
+				<h:commandButton value="Limpar" type="reset" image="/resources/img/limpo_db.png" title="Limpar" id="reset">
+					<f:ajax execute="reset" render="@form" />
+				</h:commandButton>
+			</h:panelGroup>
+		</h:panelGrid>
 		
-		<h:dataTable value="#{pessoaBean.pessoas}" var="pessoa">
+		<h:dataTable value="#{pessoaBean.pessoas}" var="pessoa" border="3" cellpadding="6">
+		
+			<f:facet name="header">
+				<h:outputText value="Lista de Pessoas Cadastradas"/>
+			</f:facet>
+			
 			<h:column>
+				<f:facet name="header">
+					<h:outputText value="ID"/>
+				</f:facet>
 				<h:outputText value="#{pessoa.id}" />
 			</h:column>
 			<h:column>
+				<f:facet name="header">
+					<h:outputText value="Nome"/>
+				</f:facet>
 				<h:outputText value="#{pessoa.nome}" />
 			</h:column>
 			<h:column>
+				<f:facet name="header">
+					<h:outputText value="Sobrenome"/>
+				</f:facet>
 				<h:outputText value="#{pessoa.sobrenome}" />
 			</h:column>
 			<h:column>
-				<h:commandLink value="Editar">
+				<f:facet name="header">
+					<h:outputText value="Ação"/>
+				</f:facet>
+				<h:commandLink>
 					<f:setPropertyActionListener value="#{pessoa}" target="#{pessoaBean.pessoa}" />
+					<h:graphicImage value="/resources/img/editar.png" />
+					<f:ajax render="@form" />
 				</h:commandLink>
-			</h:column>
-			<h:column>
-				<h:commandLink value="Remover" action="#{pessoaBean.remover}">
+				&nbsp;		
+				<h:commandLink action="#{pessoaBean.remover}">
 					<f:setPropertyActionListener value="#{pessoa}" target="#{pessoaBean.pessoa}" />
+					<h:graphicImage value="/resources/img/apagar.png" />
+					<f:ajax render="@form" />
 				</h:commandLink>
 			</h:column>
 		</h:dataTable>
