@@ -5,15 +5,21 @@
 	xmlns:f="http://java.sun.com/jsf/core">
 	
 <h:head>
-	<title>Pessoa</title>
+	<title>Cadastro de Usuário</title>
 </h:head>
 
 <h:body>
-	<h:form id="formPessoa">
+	<h:form>
+		<h:commandLink value="Administração" action="pessoa" rendered="#{pessoaBean.permiteAcesso('ADMIN')}" /> &nbsp;
+		<h:commandLink value="Lançamentos" action="lancamento" /> &nbsp;		
+		<h:commandLink value="Trocar Usuário" action="index" /> &nbsp;
+	</h:form>
+	
+	<h:form id="formPessoa" rendered="#{pessoaBean.permiteAcesso('ADMIN')}">
 		<h:graphicImage height="100" width="100" library="img" name="redondo2.png" />
 		<h:panelGrid columns="2">
 			<f:facet name="header">
-				<h:outputText value="Cadastro em  JSF" />
+				<h:outputText value="Cadastro de Usuário" />
 			</f:facet>
 			<h:outputLabel value="Id" for="id" />
 			<h:inputText id="id" value="#{pessoaBean.pessoa.id}" readonly="true" />
@@ -46,11 +52,25 @@
 			<h:outputLabel value="Ativo" for="ativo" />
 			<h:selectBooleanCheckbox value="#{pessoaBean.pessoa.ativo}"/>
 			
+			<h:outputLabel value="Login" for="login" />
+			<h:inputText id="login" value="#{pessoaBean.pessoa.login}" />
+			
+			<h:outputLabel value="Senha" for="senha" />
+			<h:inputSecret id="senha" value="#{pessoaBean.pessoa.senha}" />
+			
+			<h:outputLabel value="Perfil" for="perfil" />
+			<h:selectOneMenu id="perfil" value="#{pessoaBean.pessoa.perfilUsuario}">
+				<f:selectItem itemValue="NA" itemLabel="Selecione" noSelectionOption="true"></f:selectItem>
+				<f:selectItem itemValue="ADMIN" itemLabel="Administrador" />
+				<f:selectItem itemValue="SECRET" itemLabel="Secretario" />
+				<f:selectItem itemValue="RECEP" itemLabel="Recepcionista" />
+			</h:selectOneMenu>
+			
 			<h:outputLabel />
 			<h:panelGroup>
 				<h:commandButton value="Novo" action="#{pessoaBean.novo}" image="/resources/img/novo.png" title="Novo" />
 				<h:commandButton value="Salvar" action="#{pessoaBean.salvar}" image="/resources/img/salvar.png" title="Salvar" />
-				<h:commandButton value="Remover" action="#{pessoaBean.remover}" image="/resources/img/apagar.png" title="Remover" />
+				<h:commandButton value="Remover" action="#{pessoaBean.remover}" image="/resources/img/apagar.png" title="Remover" rendered="#{pessoaBean.permiteAcesso('ADMIN')}" />
 				<h:commandButton value="Limpar" type="reset" image="/resources/img/limpo_db.png" title="Limpar" id="reset">
 					<f:ajax execute="reset" render="@form" />
 				</h:commandButton>
@@ -60,7 +80,7 @@
 		<h:dataTable value="#{pessoaBean.pessoas}" var="pessoa" border="3" cellpadding="6">
 		
 			<f:facet name="header">
-				<h:outputText value="Lista de Pessoas Cadastradas"/>
+				<h:outputText value="Lista de Usuários Cadastrados"/>
 			</f:facet>
 			
 			<h:column>
@@ -91,7 +111,7 @@
 					<f:ajax render="@form" />
 				</h:commandLink>
 				&nbsp;		
-				<h:commandLink action="#{pessoaBean.remover}">
+				<h:commandLink action="#{pessoaBean.remover}" rendered="#{pessoaBean.permiteAcesso('ADMIN')}">
 					<f:setPropertyActionListener value="#{pessoa}" target="#{pessoaBean.pessoa}" />
 					<h:graphicImage value="/resources/img/apagar.png" />
 					<f:ajax render="@form" />
