@@ -2,6 +2,7 @@ package br.com.cursojsf.filter;
 
 import java.io.IOException;
 
+import javax.persistence.EntityManager;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -44,7 +45,14 @@ public class FilterAutenticacao implements Filter {
 	
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
-		JPAUtil.getEntityManager();
+		EntityManager entityManager = null;
+		try {
+			entityManager = JPAUtil.getEntityManager();
+		} finally {
+			if (entityManager != null) {
+				entityManager.close();
+			}
+		}
 	}
 
 }

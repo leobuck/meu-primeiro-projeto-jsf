@@ -8,6 +8,8 @@
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<class>br.com.cursojsf.entidades.Pessoa</class>
 		<class>br.com.cursojsf.entidades.Lancamento</class>
+		<class>br.com.cursojsf.entidades.Estados</class>
+		<class>br.com.cursojsf.entidades.Cidades</class>
 		
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/meuprimeiroprojetojsf" />
