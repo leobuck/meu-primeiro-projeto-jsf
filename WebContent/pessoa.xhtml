@@ -13,7 +13,7 @@
 <h:body>
 	<ui:include src="/menu.xhtml" />
 	
-	<h:form id="formPessoa" rendered="#{pessoaBean.permiteAcesso('ADMIN')}">
+	<h:form id="formPessoa" enctype="multipart/form-data" rendered="#{pessoaBean.permiteAcesso('ADMIN')}">
 		
 		<h:messages infoStyle="list-style-type: none; background-color: #4CAF50; color: white; padding: 20px; font-weight: bold; margin-right: 40px;" />
 		
@@ -124,6 +124,9 @@
 				<f:selectItems value="#{pessoaBean.cidades}" />
 			</h:selectOneMenu>
 			
+			<h:outputLabel value="Foto" for="foto" />
+			<h:inputFile id="foto" value="#{pessoaBean.arquivoFoto}" />
+			
 			<h:outputLabel />
 			<h:panelGroup>
 				<h:commandButton id="btnNovo" value="Novo" action="#{pessoaBean.novo}" image="/resources/img/novo.png" title="Novo">
@@ -162,6 +165,15 @@
 					<h:outputText value="Sobrenome"/>
 				</f:facet>
 				<h:outputText value="#{pessoa.sobrenome}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="Foto"/>
+				</f:facet>
+				<h:commandLink actionListener="#{pessoaBean.download}">
+					<h:graphicImage height="50" width="50" value="#{pessoa.fotoIconBase64}" />
+					<f:param name="fileDownloadId" value="#{pessoa.id}"/>
+				</h:commandLink>				
 			</h:column>
 			<h:column>
 				<f:facet name="header">

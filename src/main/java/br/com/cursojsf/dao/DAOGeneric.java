@@ -89,4 +89,21 @@ public class DAOGeneric<E> {
 		
 		return lista;
 	}
+	
+	public E consultar(Class<E> entidade, String codigo) {
+		EntityManager entityManager = JPAUtil.getEntityManager();
+		
+		EntityTransaction transaction = entityManager.getTransaction();
+		
+		transaction.begin();
+		
+		E objeto = (E) entityManager.find(entidade, Long.parseLong(codigo));
+		
+		transaction.commit();
+		
+		entityManager.close();
+		
+		return objeto;
+	}
+	
 }
