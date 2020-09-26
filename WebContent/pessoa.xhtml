@@ -25,7 +25,9 @@
 			<h:inputText id="id" value="#{pessoaBean.pessoa.id}" readonly="true" />
 			
 			<h:outputLabel value="Nome" for="nome" />
-			<h:inputText id="nome" value="#{pessoaBean.pessoa.nome}" required="true" requiredMessage="Informe o nome do usuário" validatorMessage="Nome tem que ter no minímo 10 letras" pt:placeholder="Informe o nome do usuário">
+			<h:inputText id="nome" value="#{pessoaBean.pessoa.nome}" required="true" requiredMessage="Informe o nome do usuário" 
+				validatorMessage="Nome tem que ter no minímo 10 letras" pt:placeholder="Informe o nome do usuário"
+				valueChangeListener="#{pessoaBean.mudarValor}">
 				<f:validateLength minimum="3" maximum="80" />
 			</h:inputText>
 			
@@ -112,7 +114,7 @@
 			<h:outputLabel value="Estados" for="estados" />
 			<h:selectOneMenu id="estados" value="#{pessoaBean.pessoa.estados}" immediate="true"
 				converter="estadoConverter">
-				<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+				<f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true" />
 				<f:selectItems value="#{pessoaBean.estados}" />
 				<f:ajax event="change" execute="@this" listener="#{pessoaBean.carregaCidades}" render="cidades" />
 			</h:selectOneMenu>
@@ -120,19 +122,25 @@
 			<h:outputLabel value="Cidades" for="cidades" />
 			<h:selectOneMenu id="cidades" value="#{pessoaBean.pessoa.cidades}" immediate="true"
 				converter="cidadesConverter">
-				<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+				<f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true" />
 				<f:selectItems value="#{pessoaBean.cidades}" />
 			</h:selectOneMenu>
 			
 			<h:outputLabel value="Foto" for="foto" />
 			<h:inputFile id="foto" value="#{pessoaBean.arquivoFoto}" />
 			
+			<h:outputLabel value="CPF" for="cpf" />
+			<h:inputText id="cpf" value="#{pessoaBean.pessoa.cpf}" />
+			
+			<h:outputLabel value="Título Eleitoral" for="titEleitoral" />
+			<h:inputText id="titEleitoral" value="#{pessoaBean.pessoa.titEleitoral}" />
+			
 			<h:outputLabel />
 			<h:panelGroup>
 				<h:commandButton id="btnNovo" value="Novo" action="#{pessoaBean.novo}" image="/resources/img/novo.png" title="Novo">
 					<f:ajax execute="btnNovo" render="@form"/>
 				</h:commandButton>
-				<h:commandButton value="Salvar" action="#{pessoaBean.salvar}" image="/resources/img/salvar.png" title="Salvar" />
+				<h:commandButton value="Salvar" actionListener="#{pessoaBean.registraLog}" action="#{pessoaBean.salvar}" image="/resources/img/salvar.png" title="Salvar" />
 				<h:commandButton value="Remover" action="#{pessoaBean.remover}" image="/resources/img/apagar.png" title="Remover" rendered="#{pessoaBean.permiteAcesso('ADMIN')}" />
 				<h:commandButton id="btnLimpar" value="Limpar" action="#{pessoaBean.limpar}" image="/resources/img/limpo_db.png" title="Limpar">
 					<f:ajax execute="btnLimpar" render="@form" />
@@ -179,13 +187,13 @@
 				<f:facet name="header">
 					<h:outputText value="Ação"/>
 				</f:facet>
-				<h:commandLink action="#{pessoaBean.editar}">
+				<h:commandLink action="#{pessoaBean.editar}" title="Editar">
 					<f:setPropertyActionListener value="#{pessoa}" target="#{pessoaBean.pessoa}" />
 					<h:graphicImage value="/resources/img/editar.png" />
 					<f:ajax render=":formPessoa" />
 				</h:commandLink>
 				&nbsp;		
-				<h:commandLink action="#{pessoaBean.remover}" rendered="#{pessoaBean.permiteAcesso('ADMIN')}">
+				<h:commandLink action="#{pessoaBean.remover}" rendered="#{pessoaBean.permiteAcesso('ADMIN')}" title="Remover">
 					<f:setPropertyActionListener value="#{pessoa}" target="#{pessoaBean.pessoa}" />
 					<h:graphicImage value="/resources/img/apagar.png" />
 					<f:ajax render="@form" />
