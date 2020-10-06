@@ -1,17 +1,27 @@
 package br.com.cursojsf.dao;
 
+import java.io.Serializable;
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
 import br.com.cursojsf.util.JPAUtil;
 
-public class DAOGeneric<E> {
+@Named
+public class DAOGeneric<E> implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+
+	@Inject
+	private EntityManager entityManager;
+	
+	@Inject
+	private JPAUtil jpaUtil;
+	
 	public void salvar(E entidade) {
-		EntityManager entityManager = JPAUtil.getEntityManager();
-		
 		EntityTransaction transaction = entityManager.getTransaction();
 		
 		transaction.begin();
@@ -19,13 +29,9 @@ public class DAOGeneric<E> {
 		entityManager.persist(entidade);
 		
 		transaction.commit();
-		
-		entityManager.close();
 	}
 	
 	public E merge(E entidade) {
-		EntityManager entityManager = JPAUtil.getEntityManager();
-		
 		EntityTransaction transaction = entityManager.getTransaction();
 		
 		transaction.begin();
@@ -34,14 +40,10 @@ public class DAOGeneric<E> {
 		
 		transaction.commit();
 		
-		entityManager.close();
-		
 		return entidadeRetorno;
 	}
 	
 	public void delete(E entidade) {
-		EntityManager entityManager = JPAUtil.getEntityManager();
-		
 		EntityTransaction transaction = entityManager.getTransaction();
 		
 		transaction.begin();
@@ -49,18 +51,14 @@ public class DAOGeneric<E> {
 		entityManager.remove(entidade);
 		
 		transaction.commit();
-		
-		entityManager.close();
 	}
 	
-	public void deletePorId(E entidade) {
-		EntityManager entityManager = JPAUtil.getEntityManager();
-		
+	public void deletePorId(E entidade) {		
 		EntityTransaction transaction = entityManager.getTransaction();
 		
 		transaction.begin();
 		
-		Object id = JPAUtil.getPrimaryKey(entidade);
+		Object id = jpaUtil.getPrimaryKey(entidade);
 		
 		entityManager
 			.createQuery("DELETE FROM " + entidade.getClass().getSimpleName() + " WHERE id = :id")
@@ -68,13 +66,10 @@ public class DAOGeneric<E> {
 			.executeUpdate();
 		
 		transaction.commit();
-		
-		entityManager.close();
 	}
 	
-	public List<E> listar(Class<E> entidade) {
-		EntityManager entityManager = JPAUtil.getEntityManager();
-		
+	@SuppressWarnings("unchecked")
+	public List<E> listar(Class<E> entidade) {		
 		EntityTransaction transaction = entityManager.getTransaction();
 		
 		transaction.begin();
@@ -85,14 +80,10 @@ public class DAOGeneric<E> {
 		
 		transaction.commit();
 		
-		entityManager.close();
-		
 		return lista;
 	}
 	
-	public E consultar(Class<E> entidade, String codigo) {
-		EntityManager entityManager = JPAUtil.getEntityManager();
-		
+	public E consultar(Class<E> entidade, String codigo) {		
 		EntityTransaction transaction = entityManager.getTransaction();
 		
 		transaction.begin();
@@ -100,8 +91,6 @@ public class DAOGeneric<E> {
 		E objeto = (E) entityManager.find(entidade, Long.parseLong(codigo));
 		
 		transaction.commit();
-		
-		entityManager.close();
 		
 		return objeto;
 	}

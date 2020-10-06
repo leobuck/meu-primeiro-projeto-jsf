@@ -2,15 +2,14 @@ package br.com.cursojsf.converter;
 
 import java.io.Serializable;
 
+import javax.enterprise.inject.spi.CDI;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 
 import br.com.cursojsf.entidades.Cidades;
-import br.com.cursojsf.util.JPAUtil;
 
 @FacesConverter(forClass = Cidades.class, value = "cidadesConverter")
 public class CidadesConverter implements Converter, Serializable {
@@ -19,17 +18,9 @@ public class CidadesConverter implements Converter, Serializable {
 
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String codigoCidade) {
-		EntityManager entityManager = JPAUtil.getEntityManager();
-		
-		EntityTransaction transaction = entityManager.getTransaction();
-		
-		transaction.begin();
+		EntityManager entityManager = CDI.current().select(EntityManager.class).get();
 		
 		Cidades cidade = (Cidades) entityManager.find(Cidades.class, Long.parseLong(codigoCidade));
-		
-		transaction.commit();
-		
-		entityManager.close();
 		
 		return cidade;
 	}

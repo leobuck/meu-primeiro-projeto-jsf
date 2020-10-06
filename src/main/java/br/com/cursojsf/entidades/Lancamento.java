@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.ForeignKey;
 
+@SuppressWarnings("deprecation")
 @Entity
 public class Lancamento implements Serializable {
 
@@ -25,6 +26,7 @@ public class Lancamento implements Serializable {
 	
 	private String empresaDestino;
 	
+	@SuppressWarnings("deprecation")
 	@ManyToOne(optional = false)
 	@ForeignKey(name = "usuario_fk")
 	private Pessoa usuario;

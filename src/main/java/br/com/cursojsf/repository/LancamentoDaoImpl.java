@@ -1,21 +1,29 @@
 package br.com.cursojsf.repository;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
 import br.com.cursojsf.entidades.Lancamento;
-import br.com.cursojsf.util.JPAUtil;
 
-public class LancamentoDaoImpl implements ILancamentoDao{
+@Named
+public class LancamentoDaoImpl implements ILancamentoDao, Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
+	@Inject
+	private EntityManager entityManager;
+	
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Lancamento> consultar(Long idUsuario) {
 		List<Lancamento> lista = new ArrayList<Lancamento>();
 		
-		EntityManager entityManager = JPAUtil.getEntityManager();
 		EntityTransaction transaction = entityManager.getTransaction();
 		transaction.begin();
 		
@@ -24,7 +32,6 @@ public class LancamentoDaoImpl implements ILancamentoDao{
 				.getResultList();
 		
 		transaction.commit();
-		entityManager.close();
 		
 		return lista;
 	}

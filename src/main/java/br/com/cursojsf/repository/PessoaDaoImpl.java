@@ -1,23 +1,29 @@
 package br.com.cursojsf.repository;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.model.SelectItem;
+import javax.inject.Inject;
+import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
 import br.com.cursojsf.entidades.Estados;
 import br.com.cursojsf.entidades.Pessoa;
-import br.com.cursojsf.util.JPAUtil;
 
-public class PessoaDaoImpl implements IPessoaDao {
+@Named
+public class PessoaDaoImpl implements IPessoaDao, Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
+	@Inject
+	private EntityManager entityManager;
+	
 	@Override
 	public Pessoa consultarUsuario(String login, String senha) {
 		Pessoa pessoa = null;
-		
-		EntityManager entityManager = JPAUtil.getEntityManager();
 		
 		EntityTransaction transaction = entityManager.getTransaction();
 		
@@ -30,16 +36,13 @@ public class PessoaDaoImpl implements IPessoaDao {
 		
 		transaction.commit();
 		
-		entityManager.close();
-		
 		return pessoa;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<SelectItem> listaEstados() {
 		List<SelectItem> selectItems = new ArrayList<SelectItem>();
-		
-		EntityManager entityManager = JPAUtil.getEntityManager();
 		
 		EntityTransaction transaction = entityManager.getTransaction();
 		
@@ -52,8 +55,6 @@ public class PessoaDaoImpl implements IPessoaDao {
 		}
 		
 		transaction.commit();
-		
-		entityManager.close();
 		
 		return selectItems;
 	}

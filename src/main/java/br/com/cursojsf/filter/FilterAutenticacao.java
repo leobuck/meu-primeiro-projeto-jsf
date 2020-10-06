@@ -2,6 +2,7 @@ package br.com.cursojsf.filter;
 
 import java.io.IOException;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -20,6 +21,9 @@ import br.com.cursojsf.util.JPAUtil;
 @WebFilter(urlPatterns = {"/*"})
 public class FilterAutenticacao implements Filter {
 
+	@Inject
+	private JPAUtil jpaUtil;
+	
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
@@ -47,7 +51,7 @@ public class FilterAutenticacao implements Filter {
 	public void init(FilterConfig filterConfig) throws ServletException {
 		EntityManager entityManager = null;
 		try {
-			entityManager = JPAUtil.getEntityManager();
+			entityManager = jpaUtil.getEntityManager();
 		} finally {
 			if (entityManager != null) {
 				entityManager.close();
